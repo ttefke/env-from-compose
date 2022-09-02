@@ -89,7 +89,7 @@ else:
         
         # Write new environment variables to list
         new_environment_vars.sort()
-        env_file.write("# Appended by env-from-compose at " + datetime.now().strftime("%Y-%m-%d %H:%M:%S\n"))
+        env_file.write("\n# Appended by env-from-compose at " + datetime.now().strftime("%Y-%m-%d %H:%M:%S\n"))
         for var in new_environment_vars:
             env_file.write(var + "=\n")
         env_file.close()
