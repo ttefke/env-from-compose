@@ -51,6 +51,19 @@ else:
                             else:
                                 print("The variable '" + var + "' of the service '" + service +
                                     "' is not relying on .env file values. Skipping.")
+            
+            # Now read the whole file again and search for variables used elsewhere
+            compose_file.seek(0)
+            exp = re.compile("\$\{([A-Z_}]*)\}")
+            for line in compose_file:
+                line = line.strip()
+                result = re.findall(exp, line)
+                # Add found variables to list
+                for var in result:
+                    if var not in new_environment_vars:
+                        new_environment_vars.append(var)
+            
+            # Close the file
             compose_file.close()
         except FileNotFoundError:
             sys.exit("Could not open '" + yaml_file + "', aborting.")
