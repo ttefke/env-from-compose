@@ -1,0 +1,8 @@
+# YAML files
+*.yaml
+*.yml
+
+# Existing .env (template) files
+.env
+.env.template
+.env.example
