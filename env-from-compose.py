@@ -18,6 +18,8 @@ parser.add_argument("-i", "--input", action="append", help="name of the compose 
 parser.add_argument("-o", "--output", help="name of environment file to be created or updated")
 args = parser.parse_args()
 
+considered_characters = "A-Z_"
+
 if args.input == None or args.output == None: # No arguments provided
     parser.print_help()
 else:
@@ -54,7 +56,7 @@ else:
             
             # Now read the whole file again and search for variables used elsewhere
             compose_file.seek(0)
-            exp = re.compile("\$\{([A-Z_}]*)\}")
+            exp = re.compile("\$\{([" + considered_characters + "}]*)\}")
             for line in compose_file:
                 line = line.strip()
                 result = re.findall(exp, line)
@@ -76,7 +78,7 @@ else:
         env_file.seek(0)
         
         # Get already defined environment variables
-        env_re = re.compile("[A-Z_]*=")
+        env_re = re.compile("[" + considered_characters + "]*=")
         
         # Collect no longer needed environment variables in a list
         no_longer_needed_vars = list()
